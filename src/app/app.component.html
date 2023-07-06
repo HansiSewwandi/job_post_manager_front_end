@@ -1,0 +1,113 @@
+<mat-toolbar color="primary">
+
+  <div class=" w-full max-w-5xl mx-auto px-12">
+    <span>Job Post</span>
+  </div>
+
+</mat-toolbar>
+<div class="w-full  max-w-5xl mx-auto bg-slate-100 px-12 flex flex-col gap-4 py-12">
+  <form #jobForm="ngForm">
+  <mat-card>
+    
+    <mat-card-header>
+      <mat-card-title>Add New Job Post</mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      
+        <div class="mx-4 mt-6">
+          <div class="flex flex-row gap-4">
+            <mat-form-field class=" basis-1/2" appearance="fill">
+              <mat-label>Post Name</mat-label>
+              <input type="text" matInput name="name"
+                     placeholder="Ex. Software Engineer" [(ngModel)]="post.postName" #name="ngModel" required="true">
+              <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+              <mat-error *ngIf="name.invalid">
+                Post is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class=" basis-1/2" appearance="fill">
+              <mat-label>Job Type</mat-label>
+              <input type="text" matInput  name="type"
+                     placeholder="Ex. Software Development" [(ngModel)]="post.jobType" #type="ngModel" required="true">
+              <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+              <mat-error *ngIf="type.invalid">
+                Job Type is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="mt-4">
+            <mat-form-field appearance="fill" class="w-full">
+              <mat-label>Job Description</mat-label>
+              <textarea matInput [(ngModel)]="post.description" name="description"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+    </mat-card-content>
+    <mat-card-actions  class="">
+      <div class="px-8 pb-2 flex flex-row justify-end gap-4">
+        <button mat-button type="reset">Reset</button>
+      <button mat-flat-button color="primary" type="button" (click)="submit()">Save</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>
+
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Search Job</mat-card-title>
+      
+    </mat-card-header>
+    <mat-card-content>
+
+      <div class="flex flex-row justify-between gap-16 mx-4">
+        <form class="grow">
+          <mat-form-field class="w-full">
+            <mat-label>Job Name</mat-label>
+            <input type="text"
+                   placeholder="Pick one"
+                   aria-label="Number"
+                   matInput
+                   [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option >dddd
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+        <div class="mt-1">
+          <button mat-flat-button color="primary">Search</button>
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+
+  <div class="mx-4 mt-8">
+    <div class="text-2xl font-medium">Available Jobs</div>
+
+    <div class="flex flex-row mt-4" *ngIf="allPost.length > 0">
+      <mat-card class=" basis-1/2" *ngFor="let item of allPost">
+        <mat-card-header>
+          <mat-card-title class="text-base">{{item.postName}}</mat-card-title>
+          <mat-card-subtitle>{{item.jobType}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="mx-4">
+          {{item.description}}
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="flex flex-row justify-end px-4 pb-2 gap-4">
+            <button mat-icon-button color="primary" matTooltip="Edit post" (click)="isEdit=true;post = item;">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" matTooltip="Delete post" (click)="delete(item)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+
+    </div>
+  </div>
+</div>
